@@ -1,0 +1,24 @@
+// Classe Apex que retorna informações sobre contas
+public with sharing class InformacoesContas {
+
+    // Método que retorna uma lista de contas, ordenadas por um campo específico
+    @AuraEnabled
+    public static List<Account> getAccounts(String orderBy){
+        // Monta uma string de consulta SQL dinamicamente com o campo de ordenação informado
+        String queryString = 'SELECT Id, Name, Phone, Type, Rating FROM Account ORDER BY ' + orderBy;
+        // Executa a consulta e retorna a lista de contas
+        return Database.query(queryString);
+    }
+}
+
+/*Executar o código a seguir na janela anonima (CTRL+E) para verificar
+se a classe apex está imprimindo a lista de contas*/
+
+// Executa o método estático "getAccounts" da classe "InformacoesContas" passando o campo de ordenação como parâmetro
+
+/*List<Account> accountsList = InformacoesContas.getAccounts('Name');
+
+// Para cada conta na lista de contas retornada pelo método "getAccounts", exibe o nome da conta no log do sistema
+for(Account account : accountsList){
+    System.debug(account.Name);
+}*/

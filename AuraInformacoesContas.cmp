@@ -1,0 +1,28 @@
+<!-- Componente Aura que exibe uma lista de contas em um card e usa um controlador Apex para recuperar as informações -->
+<aura:component controller="InformacoesContas" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global">
+    <!-- Atributo que armazena a lista de contas retornada pelo controlador -->
+    <aura:attribute name="listaContas" type="Account[]" />
+    <!-- Atributo que define o campo de ordenação das contas -->
+    <aura:attribute name="orderBy" type="String" default="Name" />
+    <!-- Evento "init" que é disparado quando o componente é inicializado e chama o controlador para recuperar a lista de contas -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <!-- Card Lightning que exibe a lista de contas em seções expansíveis -->
+    <lightning:card title="Lista de Contas">
+        <!-- Componente Accordion que permite expandir/contrair as seções -->
+        <lightning:accordion allowMultipleSectionsOpen="true">
+            <!-- Iteração sobre a lista de contas para criar uma seção expansível para cada uma -->
+            <aura:iteration items="{!v.listaContas}" var="conta">
+                <!-- Seção expansível que exibe o nome da conta como título -->
+                <lightning:accordionSection name="{!conta.Id}" label="{!conta.Name}">
+                    <!-- Corpo da seção expansível com as informações da conta -->
+                    <aura:set attribute="body">
+                        <p>Phone: {!conta.Phone}</p>
+                        <p>Type: {!conta.Type}</p>
+                        <p>Rating: {!conta.Rating}</p>
+                    </aura:set>
+                </lightning:accordionSection>
+            </aura:iteration>
+        </lightning:accordion>
+    </lightning:card>
+</aura:component>
